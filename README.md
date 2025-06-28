@@ -2,7 +2,7 @@
 
 Este es mi repositorio personal, creado para compartir y exponer mis proyectos sobre Ciencia de Datos e Inteligencia Artifical. Hasta la fecha actual el repositorio se compone de :
 
-1. **Hundir la Flota**
+1. **Hundir la Flota**  
     Juego de hundir la flota creado coon códido de Python.
 
 2. **EDA (Exploratory Data Analysis)**  
