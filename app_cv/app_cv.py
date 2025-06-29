@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_cohere import CohereEmbeddings, ChatCohere
-from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS # <--- CAMBIO: Importamos FAISS
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import MessagesPlaceholder
@@ -51,8 +51,10 @@ def get_vector_store_and_retriever(pdf_path: str):
     chunks = text_splitter.split_documents(documents)
     
     embeddings = get_embeddings_model()
-    vector_db = Chroma.from_documents(chunks, embeddings)
+    # --- CAMBIO AQUÍ: Usamos FAISS en lugar de Chroma ---
+    vector_db = FAISS.from_documents(chunks, embeddings) 
     retriever = vector_db.as_retriever(search_kwargs={"k": 3}) 
+    # ----------------------------------------------------
     st.success("CV procesado y listo.")
     return retriever
 

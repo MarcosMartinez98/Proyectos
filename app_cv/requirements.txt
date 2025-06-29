@@ -1,13 +1,12 @@
 streamlit
 langchain-core
-langchain-community
+langchain-community[faiss] 
 langchain-cohere
-langchain-chroma
 PyMuPDF
 python-dotenv
 requests
 tenacity
 cohere
-protobuf==3.20.1
-#chromadb==0.4.18
-numpy==1.26.4
+protobuf==3.20.1 
+numpy==1.26.4 
+faiss-cpu 
