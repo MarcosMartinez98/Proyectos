@@ -8,3 +8,4 @@ python-dotenv
 requests
 tenacity
 cohere
+protobuf==3.20.1
