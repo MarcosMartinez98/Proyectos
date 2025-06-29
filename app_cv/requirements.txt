@@ -3,7 +3,7 @@ langchain-core
 langchain-community
 langchain-cohere
 langchain-chroma
-pypdfium2-team
+PyMuPDF
 python-dotenv
 requests
 tenacity
