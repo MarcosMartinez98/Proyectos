@@ -10,3 +10,4 @@ tenacity
 cohere
 protobuf==3.20.1
 chromadb==0.4.18
+numpy==1.26.4
