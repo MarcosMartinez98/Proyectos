@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_cohere import CohereEmbeddings, ChatCohere
-from langchain_community.vectorstores import FAISS # <--- CAMBIO: Importamos FAISS
+from langchain_community.vectorstores import FAISS 
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import MessagesPlaceholder
@@ -51,7 +51,7 @@ def get_vector_store_and_retriever(pdf_path: str):
     chunks = text_splitter.split_documents(documents)
     
     embeddings = get_embeddings_model()
-    # --- CAMBIO AQUÍ: Usamos FAISS en lugar de Chroma ---
+  
     vector_db = FAISS.from_documents(chunks, embeddings) 
     retriever = vector_db.as_retriever(search_kwargs={"k": 3}) 
     # ----------------------------------------------------
@@ -133,7 +133,7 @@ st.title("💡 Asesor de CV impulsado por IA")
 st.markdown("Optimiza tu CV para cualquier puesto de trabajo con la ayuda de la Inteligencia Artificial.")
 
 # Inicialización del estado de la sesión
-# Se inicializa como cadena vacía por si acaso, pero la lógica de invocación la pasará directamente
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "pdf_processed_path" not in st.session_state:
@@ -144,7 +144,7 @@ if "retriever_obj" not in st.session_state:
     st.session_state.retriever_obj = None
 if "rag_chain" not in st.session_state:
     st.session_state.rag_chain = None
-if "last_dpt_summary_used" not in st.session_state: # <-- Nueva variable para guardar el resumen usado
+if "last_dpt_summary_used" not in st.session_state: 
     st.session_state.last_dpt_summary_used = ""
 
 # --- Columna para la Entrada de Datos ---
@@ -177,7 +177,7 @@ with st.sidebar:
                 
                 # Generar el resumen de la DPT
                 st.session_state.dpt_summarized = get_dpt_summary(dpt_input) 
-                st.session_state.last_dpt_summary_used = st.session_state.dpt_summarized # <-- Guardar el resumen actual
+                st.session_state.last_dpt_summary_used = st.session_state.dpt_summarized 
 
                 st.info("Resumen de la DPT:")
                 st.markdown(f"```\n{st.session_state.dpt_summarized}\n```")
@@ -185,13 +185,12 @@ with st.sidebar:
                 retriever_obj = st.session_state.retriever_obj
                 custom_chat_prompt = create_cv_optimization_chat_prompt()
 
-                # Siempre crear la cadena si los componentes están listos
+                
                 if retriever_obj is not None: 
                     st.session_state.rag_chain = (
                         RunnablePassthrough.assign(
                             context_cv=lambda x: format_docs(retriever_obj.invoke(x["question"])),
-                            # ¡CAMBIO CLAVE AQUÍ! job_description ahora se esperará como parte del input
-                            # Ya no se accede a st.session_state.dpt_summarized dentro de la lambda de asignación
+                           
                         )
                         | custom_chat_prompt
                         | llm_model_for_chat
@@ -203,11 +202,11 @@ with st.sidebar:
                     st.session_state.messages = []
                     st.session_state.messages.append({"role": "user", "content": initial_query})
 
-                    # ¡CAMBIO CLAVE AQUÍ! Pasar el resumen de la DPT directamente en la invocación
+                    
                     response = st.session_state.rag_chain.invoke({
                         "question": initial_query,
                         "chat_history": st.session_state.messages,
-                        "job_description": st.session_state.last_dpt_summary_used # <-- ¡PÁSAME DIRECTO!
+                        "job_description": st.session_state.last_dpt_summary_used 
                     })
                     
                     st.session_state.messages.append({"role": "assistant", "content": response})
@@ -231,11 +230,11 @@ if st.session_state.messages:
                 st.write(prompt)
 
             with st.spinner("Generando respuesta..."):
-                # ¡CAMBIO CLAVE AQUÍ! Pasar el resumen de la DPT directamente en la invocación
+                
                 response = st.session_state.rag_chain.invoke({
                     "question": prompt,
                     "chat_history": st.session_state.messages,
-                    "job_description": st.session_state.last_dpt_summary_used # <-- ¡PÁSAME DIRECTO!
+                    "job_description": st.session_state.last_dpt_summary_used 
                 })
                 st.session_state.messages.append({"role": "assistant", "content": response})
                 with st.chat_message("assistant"):
