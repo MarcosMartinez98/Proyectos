@@ -1,0 +1,10 @@
+streamlit
+langchain-core
+langchain-community
+langchain-cohere
+langchain-chroma
+pypdfium2-team
+python-dotenv
+requests
+tenacity
+cohere
