@@ -44,3 +44,29 @@ cohere
 protobuf==3.20.1  
 numpy==1.26.4  
 faiss-cpu  
+
+
+### Configuración de Claves de API  
+
+Para que la aplicación funcione, necesitas una **clave API de Cohere**. Es crucial que **no la incluyas directamente en tu código o repositorio**. Configúrala como un "Secret" en Streamlit Cloud bajo el nombre `COHERE_API_KEY`. Ten en cuenta que, aunque Cohere tenga un nivel de uso gratuito, el consumo de la API se contabilizará bajo tu cuenta.  
+
+### Versión de Python  
+
+Es vital seleccionar una versión de Python compatible en Streamlit Cloud. Se recomienda usar **Python 3.10** o **Python 3.11** para el despliegue de esta aplicación.  
+
+---
+
+## Uso Local (Desarrollo)  
+
+Para ejecutar este proyecto en tu máquina:  
+
+1.  Clona el repositorio: `git clone [URL_DE_TU_REPOSITORIO]`  
+2.  Accede al directorio del proyecto: `cd [nombre_de_tu_carpeta_proyecto]`  
+3.  Instala los requirements anteriores  
+4.  Crea un archivo `.env` en la raíz del proyecto y añade tu clave API:  
+    ```
+    COHERE_API_KEY="tu_clave_api_de_cohere_aqui"  
+    ```
+5.  Ejecuta la aplicación: `streamlit run app_cv/app_cv.py`  
+
+Aquí tienes el [enlace](https://boostyourcv.streamlit.app/) para ver la app en Streamlit Cloud
